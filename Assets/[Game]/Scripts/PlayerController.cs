@@ -1,12 +1,16 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform carryingPosition;
+
     [SerializeField] private float moveSpeed;
 
     [HideInInspector] public bool move = false;
+    [HideInInspector] public Queue<Timber> timbers = new Queue<Timber>();
 
     private Animator animator;
 
@@ -34,5 +38,26 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movePos = transform.position + transform.forward * moveSpeed;
         transform.position = Vector3.Lerp(transform.position, movePos, Time.deltaTime);
+    }
+
+    private void Pick(Transform timber)
+    {
+        if (timbers.Count == 0)
+        {
+            animator.SetTrigger("Carry");
+        }
+
+        timber.SetParent(carryingPosition);
+        timber.DOLocalMove(new Vector3(0f, timbers.Count * 0.1f, 0f), 0.15f);
+
+        timbers.Enqueue(timber.GetComponent<Timber>());
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Timber"))
+        {
+            Pick(other.transform);
+        }
     }
 }

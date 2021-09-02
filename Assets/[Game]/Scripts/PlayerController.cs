@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public Transform carryingPosition;
 
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 10f;
 
     [HideInInspector] public bool move = false;
     [HideInInspector] public Queue<Timber> timbers = new Queue<Timber>();
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private void HandleMovement()
     {
         if (!move) return;
+
+        transform.Rotate(Vector3.up, InputManager.instance.delta.x * rotationSpeed * Time.deltaTime);
 
         Vector3 movePos = transform.position + transform.forward * moveSpeed;
         transform.position = Vector3.Lerp(transform.position, movePos, Time.deltaTime);

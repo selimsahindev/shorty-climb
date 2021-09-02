@@ -50,9 +50,24 @@ public class CameraManager : MonoBehaviour {
     }
     #endregion
 
-    #region Start - Update - FixedUpdate - LateUpdate
-    //private void Start() { LevelManager.instance.endGameEvent.AddListener(success => { rotateAnimation = true; }); }
-    private void FixedUpdate() { if (updateType == CameraUpdateType.Fixed) CameraFocus(); }
+    private void Start()
+    {
+        LevelManager.instance.endGameEvent.AddListener(success => {
+            if (success)
+            {
+                rotateAnimation = true;
+            }
+            else
+            {
+                follow = false;
+                rotate = false;
+                rotateWithTarget = false;
+            }
+        });
+    }
+
+    #region Update - FixedUpdate - LateUpdate
+    private void FixedUpdate(){ if (updateType == CameraUpdateType.Fixed) CameraFocus(); }
     private void LateUpdate() { if (updateType == CameraUpdateType.Late) CameraFocus(); }
     private void Update() { if (updateType == CameraUpdateType.Normal) CameraFocus(); }
     #endregion
@@ -97,7 +112,7 @@ public class CameraManager : MonoBehaviour {
     #endregion
 
     #region CameraPhysics
-    public void CameraShake(float duration = 0.25f, float _shakeMagnitude = 0.1f, bool _turbilance = false) {
+    public void CameraShake(float duration = 0.25f, float _shakeMagnitude = 0.1f, bool _turbilance = false){
         shakeMagnitude = _shakeMagnitude;
         StartCoroutine(ShakeCoroutine(duration));
     }

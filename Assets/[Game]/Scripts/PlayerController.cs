@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private Transform counterPosition;
 
     [HideInInspector] public bool move = false;
     [HideInInspector] public Stack<Timber> timbers = new Stack<Timber>();
@@ -19,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private GameObject ladderPrefab;
     private List<Rigidbody> ragdollRigidbodies = new List<Rigidbody>();
     private List<Collider> ragdollColliders = new List<Collider>();
+
+    [HideInInspector] public UnityEvent<int> onPicked = new UnityEvent<int>();
+    [HideInInspector] public UnityEvent<int> onPlaced = new UnityEvent<int>();
 
     private void Start()
     {
@@ -99,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         animator.SetTrigger("Jump");
 
-        StartCoroutine(Delay(0.75f, () => {
+        StartCoroutine(Delay(0.65f, () => {
             isJumping = false;
 
             if (!IsOnGround())
@@ -131,6 +135,8 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger("Run");
         }
+
+        onPlaced?.Invoke(timbers.Count);
     }
 
     public bool IsOnGround()    
@@ -160,9 +166,15 @@ public class PlayerController : MonoBehaviour
 
         timber.GetComponent<Collider>().enabled = false;
         timber.SetParent(carryingPosition);
-        timber.DOLocalMove(new Vector3(0f, timbers.Count * 0.1f, 0f), 0.15f);
+
+        Sequence seq = DOTween.Sequence();
+        
+        seq.Append(timber.DOLocalMove(new Vector3(0f, timbers.Count * 0.1f, 0f), 0.15f));
+        seq.Join(timber.DOLocalRotate(Vector3.zero, 0.15f));
 
         timbers.Push(timber.GetComponent<Timber>());
+
+        onPicked?.Invoke(timbers.Count);
     }
 
     private void ActivateRagdoll()

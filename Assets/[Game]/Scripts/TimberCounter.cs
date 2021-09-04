@@ -7,9 +7,10 @@ using DG.Tweening;
 public class TimberCounter : MonoBehaviour
 {
     [SerializeField] private Text text;
-    [SerializeField] private float visibilityTime = 0.5f;
+    [SerializeField] private float visibilityTime = 1.2f;
 
     private bool isActive = false;
+    private int pickedInARow = 0;
     private float timeElapsed = 0f;
     private PlayerController player;
     private Transform parent;
@@ -23,8 +24,9 @@ public class TimberCounter : MonoBehaviour
 
         if (player != null)
         {
-            player.onPicked.AddListener(count => {
-                UpdateCounter(count);
+            player.onPicked.AddListener(() => {
+                pickedInARow++;
+                UpdateCounter();
                 ShowCounter();
             });
 
@@ -40,12 +42,12 @@ public class TimberCounter : MonoBehaviour
         timeElapsed += Time.fixedDeltaTime;
     }
 
-    private void UpdateCounter(int count)
+    private void UpdateCounter()
     {
-        text.text = "+" + player.timbers.Count.ToString();
+        text.text = $"+{pickedInARow}";
 
         Vector3 pos = player.carryingPosition.position;
-        pos += Vector3.up * count * 0.1f;
+        pos += Vector3.up * player.timbers.Count * 0.1f;
 
         parent.position = pos;
     }
@@ -67,7 +69,7 @@ public class TimberCounter : MonoBehaviour
 
     private IEnumerator FadeInOut()
     {
-        float fadeDuration = 0.25f;
+        float fadeDuration = 0.5f;
 
         isActive = true;
 
@@ -79,7 +81,7 @@ public class TimberCounter : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        canvasGroup.DOFade(0f, fadeDuration);
+        canvasGroup.DOFade(0f, fadeDuration).OnComplete(() => pickedInARow = 0);
         isActive = false;
     }
 }

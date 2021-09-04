@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
     private List<Rigidbody> ragdollRigidbodies = new List<Rigidbody>();
     private List<Collider> ragdollColliders = new List<Collider>();
 
-    [HideInInspector] public UnityEvent<int> onPicked = new UnityEvent<int>();
-    [HideInInspector] public UnityEvent<int> onPlaced = new UnityEvent<int>();
+    [HideInInspector] public UnityEvent onPicked = new UnityEvent();
+    [HideInInspector] public UnityEvent onPlaced = new UnityEvent();
 
     private void Start()
     {
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Run");
         }
 
-        onPlaced?.Invoke(timbers.Count);
+        onPlaced?.Invoke();
     }
 
     public bool IsOnGround()    
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
         timbers.Push(timber.GetComponent<Timber>());
 
-        onPicked?.Invoke(timbers.Count);
+        onPicked?.Invoke();
     }
 
     private void ActivateRagdoll()

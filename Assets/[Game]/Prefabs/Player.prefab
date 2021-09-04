@@ -1875,8 +1875,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carryingPosition: {fileID: 2508039921098441370}
-  moveSpeed: 10
-  rotationSpeed: 10
+  moveSpeed: 8
+  rotationSpeed: 8
   counterPosition: {fileID: 1780464340241406630}
   move: 0
   onPicked:
@@ -2650,7 +2650,7 @@ RectTransform:
   m_GameObject: {fileID: 6237913989809674145}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.25}
-  m_LocalScale: {x: 0.0025, y: 0.0022, z: 0.0025}
+  m_LocalScale: {x: 0.0025, y: 0.0024, z: 0.0025}
   m_Children:
   - {fileID: 6501223763177479886}
   m_Father: {fileID: 1780464340241406630}
@@ -2730,7 +2730,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6237913989809674145}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2747,7 +2747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3885003520539415939}
-  visibilityTime: 0.5
+  visibilityTime: 1.2
 --- !u!1 &6292187049083565266
 GameObject:
   m_ObjectHideFlags: 0
@@ -3568,7 +3568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8865233416086308271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: 0.25}
+  m_LocalPosition: {x: 0, y: 1.55, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7856857786219331370}
@@ -3734,6 +3734,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 701158964c7e12a4f964ab7c5a968e2f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 701158964c7e12a4f964ab7c5a968e2f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 701158964c7e12a4f964ab7c5a968e2f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3775,7 +3783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 701158964c7e12a4f964ab7c5a968e2f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 701158964c7e12a4f964ab7c5a968e2f, type: 3}
       propertyPath: m_CastShadows

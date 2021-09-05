@@ -4774,7 +4774,7 @@ GameObject:
   - component: {fileID: 2534552164400123920}
   - component: {fileID: 2534552164400204746}
   m_Layer: 0
-  m_Name: MultiplierZoneVFX
+  m_Name: MultiplierzoneVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

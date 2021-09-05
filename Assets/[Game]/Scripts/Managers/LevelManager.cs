@@ -6,11 +6,13 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     [HideInInspector] public bool isGameActive = false;
+    [HideInInspector] public bool isFinishReached = false;
     [HideInInspector] public Level level;
     [HideInInspector] public PlayerController player;
 
     [HideInInspector] public UnityEvent startEvent = new UnityEvent();
     [HideInInspector] public UnityEvent onLevelLoaded = new UnityEvent();
+    [HideInInspector] public UnityEvent onFinishReached = new UnityEvent();
     [HideInInspector] public EndGameEvent endGameEvent = new EndGameEvent();
 
     #region Singleton
@@ -42,13 +44,13 @@ public class LevelManager : MonoBehaviour
     public void StartGame()
     {
         isGameActive = true;
-        startEvent.Invoke();
+        startEvent?.Invoke();
     }
 
     public void Success()
     {
         isGameActive = false;
-        endGameEvent.Invoke(true);
+        endGameEvent?.Invoke(true);
 
         GameManager.instance.LevelUp();
     }
@@ -56,7 +58,7 @@ public class LevelManager : MonoBehaviour
     public void Fail()
     {
         isGameActive = false;
-        endGameEvent.Invoke(false);
+        endGameEvent?.Invoke(false);
     }
 }
 

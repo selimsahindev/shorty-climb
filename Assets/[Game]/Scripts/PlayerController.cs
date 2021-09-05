@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
         LevelManager.instance.startEvent.AddListener(OnGameStart);
         LevelManager.instance.endGameEvent.AddListener(OnGameOver);
+        LevelManager.instance.onFinishReached.AddListener(() => moveSpeed *= 1.5f);
     }
 
     private void Update()
@@ -106,7 +107,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Delay(0.65f, () => {
             isJumping = false;
 
-            if (!IsOnGround())
+            if (!IsOnGround() && !LevelManager.instance.isFinishReached)
             {
                 LevelManager.instance.Fail();
             }

@@ -4241,6 +4241,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1590949654603667327, guid: 3f31d44c9687ef64e9b945bdc1e0a203, type: 3}
   m_PrefabInstance: {fileID: 802870511}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &852263411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 852263412}
+  m_Layer: 0
+  m_Name: Ladders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &852263412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852263411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1209716790}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &855389740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4844,15 +4874,15 @@ MonoBehaviour:
   rotateWithTarget: 1
   rotateAnimation: 0
   offset: 1
-  mxdistance: -9
-  mydistance: 3.5
-  mzdistance: 0
-  mangle: 0
-  msmoothforposition: 0
-  msmoothforrotation: 1000
-  msmoothforfov: 0
+  xDistance: -9
+  yDistance: 3.5
+  zDistance: 0
+  angle: 0
+  positionSmoothness: 0
+  rotationSmoothness: 1000
+  fovSmoothness: 0
   shakeMagnitude: 0
-  cameraFov: 60
+  fov: 60
   rotateAnimationSpeed: 2
   rotateAnimationMinValue: 40
   rotateAnimationMaxValue: 120
@@ -6278,7 +6308,7 @@ Transform:
   - {fileID: 1968452786}
   - {fileID: 1330978971}
   m_Father: {fileID: 1209716790}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1102956945
 PrefabInstance:
@@ -6790,8 +6820,9 @@ Transform:
   m_Children:
   - {fileID: 1050706942}
   - {fileID: 1142182041}
-  - {fileID: 1472333220}
   - {fileID: 1100785999}
+  - {fileID: 852263412}
+  - {fileID: 1472333220}
   - {fileID: 1492193032}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -6808,9 +6839,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2f9696f04032847a38b08805a7445e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laddersContainer: {fileID: 852263412}
   backgroundColor: {r: 1, g: 0.77254903, b: 0.45490193, a: 1}
   fogColor: {r: 1, g: 0.77254903, b: 0.454902, a: 1}
   fogMaterial: {fileID: 2100000, guid: 22716c3797fd9314694fa9a6c8d97b69, type: 2}
+  finish: {fileID: 0}
 --- !u!1001 &1222728923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7379,8 +7412,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameActive: 0
+  isFinishReached: 0
   level: {fileID: 0}
   player: {fileID: 0}
+  multiplier: {fileID: 0}
   startEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -8520,7 +8555,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3731704425456146317, guid: e8220b65313e4584d83ee9fd635d1073, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3731704425456146317, guid: e8220b65313e4584d83ee9fd635d1073, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10625,6 +10660,7 @@ MonoBehaviour:
   levelCount: 1
   level: 1
   isGamePaused: 0
+  finishParticles: {fileID: 0}
   onGamePaused:
     m_PersistentCalls:
       m_Calls: []
@@ -11293,7 +11329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 468232342118693814, guid: 050cd62f94a51bc41ad18a188ba7c681, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 468232342118693814, guid: 050cd62f94a51bc41ad18a188ba7c681, type: 3}
       propertyPath: m_LocalPosition.x

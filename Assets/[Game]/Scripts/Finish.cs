@@ -7,12 +7,8 @@ public class Finish : MonoBehaviour
 {
     [SerializeField] private Transform multipliers;
 
-    private ParticleSystem finishParticles;
-
     private void Start()
     {
-        finishParticles = Resources.Load<ParticleSystem>("Particles/MultiplierzoneVFX");
-
         foreach (Transform multiplier in multipliers)
         {
             multiplier.localScale = Vector3.zero;
@@ -26,7 +22,7 @@ public class Finish : MonoBehaviour
         {
             GetComponent<Collider>().enabled = false;
 
-            ParticleSystem particle = Instantiate(finishParticles, transform);
+            ParticleSystem particle = Instantiate(GameManager.instance.finishParticles, transform);
             particle.transform.localPosition = new Vector3(0f, 0.25f, 0f);
             particle.transform.localScale = Vector3.one * 1.25f;
             particle.Play();
@@ -46,7 +42,7 @@ public class Finish : MonoBehaviour
         {
             StartCoroutine(ShowRoutine(multiplier, i * 0.25f));
 
-            Vector3 pos = new Vector3(multiplier.localPosition.x, multiplier.localPosition.y, 4f + (i + 1) * 8f);
+            Vector3 pos = new Vector3(multiplier.localPosition.x, multiplier.localPosition.y, 2f + (i + 1) * 8f);
 
             if (i % 2 == 0)
             {
@@ -58,6 +54,7 @@ public class Finish : MonoBehaviour
             }
 
             multiplier.localPosition = pos;
+            multiplier.localScale *= 1.2f;
 
             i++;
         }

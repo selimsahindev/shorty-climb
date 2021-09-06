@@ -6,9 +6,10 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     [HideInInspector] public bool isGameActive = false;
-    [HideInInspector] public bool isFinishReached = false;
+    public bool isFinishReached = false;
     [HideInInspector] public Level level;
     [HideInInspector] public PlayerController player;
+    [HideInInspector] public Multiplier multiplier;
 
     [HideInInspector] public UnityEvent startEvent = new UnityEvent();
     [HideInInspector] public UnityEvent onLevelLoaded = new UnityEvent();

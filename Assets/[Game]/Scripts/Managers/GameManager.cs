@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int level = -1;
 
     [HideInInspector] public bool isGamePaused = false;
+    [HideInInspector] public ParticleSystem finishParticles;
 
     [HideInInspector] public UnityEvent onGamePaused = new UnityEvent();
     [HideInInspector] public UnityEvent onGameContinue = new UnityEvent();
@@ -28,6 +29,11 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    private void Start()
+    {
+        finishParticles = Resources.Load<ParticleSystem>("Particles/MultiplierzoneVFX");
+    }
 
     //private void GetDependencies()
     //{

@@ -46,10 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!LevelManager.instance.isGameActive)
-        {
-            return;
-        }
+        if (!LevelManager.instance.isGameActive) { return; }
 
         if (!IsOnGround() && !isJumping)
         {
@@ -74,13 +71,14 @@ public class PlayerController : MonoBehaviour
     {
         if (success)
         {
-            // Win
+            animator.SetTrigger("Dance");
         }
         else
         {
-            move = false;
             ActivateRagdoll();
         }
+
+        move = false;
     }
 
     private void HandleMovement()
@@ -107,11 +105,39 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Delay(0.65f, () => {
             isJumping = false;
 
-            if (!IsOnGround() && !LevelManager.instance.isFinishReached)
+            if (!LevelManager.instance.isFinishReached && !IsOnGround())
             {
                 LevelManager.instance.Fail();
             }
+            else
+            {
+                JumpToEndPlatform();
+            }
         }));
+    }
+
+    private void JumpToEndPlatform()
+    {
+        Multiplier multiplier = LevelManager.instance.multiplier;
+        Vector3 jumpPos;
+
+        float animationDuration = 1f;
+
+        if (multiplier != null)
+        {
+            jumpPos = multiplier.transform.position;
+        }
+        else
+        {
+            jumpPos = LevelManager.instance.level.finish.transform.position;
+        }
+        jumpPos.y = transform.position.y;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOMove(jumpPos, animationDuration));
+        seq.Join(transform.DORotate(new Vector3(0f, 180f, 0f), animationDuration));
+
+        LevelManager.instance.Success();
     }
 
     private void PlaceLadder()
@@ -124,13 +150,13 @@ public class PlayerController : MonoBehaviour
         Timber timber = timbers.Pop();
         timber.transform.DOScale(0f, 0.15f).OnComplete(() => Destroy(timber.gameObject));
 
-        GameObject ladder = Instantiate(ladderPrefab);
-        ladder.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+        GameObject ladder = Instantiate(ladderPrefab, LevelManager.instance.level.laddersContainer);
+        ladder.transform.position = new Vector3(transform.position.x, -0.05f, transform.position.z);
         ladder.transform.rotation = transform.rotation;
 
         Transform ladderChild = ladder.transform.GetChild(0);
         ladderChild.localScale = Vector3.zero;
-        ladderChild.DOScale(1f, 0.05f);
+        ladderChild.DOScale(1f, 0.05f).SetEase(Ease.InOutBounce);
 
         if (timbers.Count == 0)
         {

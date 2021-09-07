@@ -36,7 +36,11 @@ public class CameraManager : MonoBehaviour {
 
     public Vector3 offsetVector;
     public bool localOffset = true;
+    [Tooltip("Additional offset vector based on amount of collected items")]
+    public bool additionalOffsetEnabled = true;
+    public float maxAdditionalOffsetMagnitude = 3f;
 
+    private Vector3 additionalOffset;
     private Vector3 refVelocity;
     #endregion
 
@@ -59,6 +63,18 @@ public class CameraManager : MonoBehaviour {
     private void Start()
     {
         LevelManager.instance.endGameEvent.AddListener(OnGameOver);
+        LevelManager.instance.onLevelLoaded.AddListener(() => {
+            LevelManager.instance.level.player.onPicked.AddListener(() => {
+                additionalOffset.z -= 0.05f;
+                if (additionalOffset.magnitude > maxAdditionalOffsetMagnitude)
+                    additionalOffset = additionalOffset.normalized * maxAdditionalOffsetMagnitude;
+            });
+            LevelManager.instance.level.player.onPlaced.AddListener(() => {
+                additionalOffset.z += 0.05f;
+                if (additionalOffset.magnitude < 0f)
+                    additionalOffset = Vector3.zero;
+            });
+        });
     }
 
     private void FixedUpdate()
@@ -203,6 +219,13 @@ public class CameraManager : MonoBehaviour {
             {
                 finalposition += offsetVector;
             }
+        }
+
+        if (additionalOffsetEnabled)
+        {
+            finalposition += positionTarget.right * additionalOffset.x;
+            finalposition += positionTarget.up * additionalOffset.y;
+            finalposition += positionTarget.forward * additionalOffset.z;
         }
 
         if (follow) transform.position = Vector3.SmoothDamp(transform.position, finalposition, ref refVelocity, positionSmoothness);

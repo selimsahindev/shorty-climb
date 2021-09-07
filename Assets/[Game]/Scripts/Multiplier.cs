@@ -10,6 +10,8 @@ public class Multiplier : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GetComponent<Collider>().enabled = false;
+
             ParticleSystem particle = Instantiate(GameManager.instance.finishParticles, transform);
             particle.transform.localPosition = new Vector3(0f, 0.25f, 0f);
             particle.transform.localScale = Vector3.one * (value == 15 ? 1f : 0.5f);

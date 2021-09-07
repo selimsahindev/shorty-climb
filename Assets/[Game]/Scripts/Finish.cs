@@ -54,7 +54,6 @@ public class Finish : MonoBehaviour
             }
 
             multiplier.localPosition = pos;
-            multiplier.localScale *= 1.2f;
 
             i++;
         }

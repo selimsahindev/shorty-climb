@@ -15,15 +15,23 @@ public class Level : MonoBehaviour
     [SerializeField] private Material fogMaterial;
 
     [HideInInspector] public Finish finish;
+    [HideInInspector] public PlayerController player;
 
     private void Start()
     {
         finish = GetComponentInChildren<Finish>();
+        player = GetComponentInChildren<PlayerController>();
 
-        //Delete Later
-        LevelManager.instance.level = this;
+        Construct();
+    }
 
+    private void Construct()
+    {
         SetLevelColors();
+
+        CameraManager.instance.SetTarget(player.transform, player.transform);
+
+        LevelManager.instance.onLevelLoaded?.Invoke();
     }
 
     private void SetLevelColors()

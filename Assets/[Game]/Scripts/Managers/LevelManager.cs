@@ -34,12 +34,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        Construct();
-    }
-
-    private void Construct()
-    {
-
+        level = Instantiate(Resources.Load<Level>($"Levels/Level-{GameManager.instance.level}"));
     }
 
     public void StartGame()

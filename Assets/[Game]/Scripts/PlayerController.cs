@@ -105,13 +105,16 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Delay(0.65f, () => {
             isJumping = false;
 
-            if (!LevelManager.instance.isFinishReached && !IsOnGround())
+            if (!IsOnGround())
             {
-                LevelManager.instance.Fail();
-            }
-            else
-            {
-                JumpToEndPlatform();
+                if (LevelManager.instance.isFinishReached)
+                {
+                    JumpToEndPlatform();
+                }
+                else
+                {
+                    LevelManager.instance.Fail();
+                }
             }
         }));
     }
